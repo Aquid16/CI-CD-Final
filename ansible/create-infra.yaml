@@ -1,0 +1,11 @@
+---
+- name: Setup Web Server
+  hosts: all
+  user: ec2-user
+  become: true
+  gather_facts: true
+
+  roles:
+    - services_role
+    - users_role
+    - apps_role

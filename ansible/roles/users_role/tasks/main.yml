@@ -1,0 +1,21 @@
+---
+- name: Add user to docker group
+  ansible.builtin.command: usermod -aG docker $USER
+  
+- name: Reboot server
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+
+- name: Waiting for reboot to complete
+  wait_for_connection:
+    connect_timeout: 60
+    sleep: 10
+    delay: 10
+    timeout: 300
+
+- name: Printing the root groups
+  shell: "groups $USER"
+  register: Groups
+
+- debug: var=Groups

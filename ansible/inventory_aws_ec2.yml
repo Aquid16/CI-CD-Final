@@ -1,0 +1,11 @@
+plugin: amazon.aws.aws_ec2
+regions:
+- us-east-1
+filters:
+  tag:Owner:
+    - 'SharonSinelnikov'
+  tag:Environment:
+    - 'Sharon-Work'
+    - 'Sharon-Production'
+hostnames:
+- private-ip-address

@@ -1,0 +1,26 @@
+---
+- name: Get docker service status
+  ansible.builtin.command: systemctl status docker
+  register: output
+
+- debug: var=output
+
+- name: Clone Git Repository
+  ansible.builin.git:
+    repo: 'https://github.com/Aquid16/CI-CD-Final'
+    dest: ~/
+
+- name: Build docker image
+  community.docker.docker_image:
+    name: FlaskApp
+    api_version: 1.44
+    source: local
+    path: CI-CD-Final
+    state: present
+
+- name: Run the container
+  ansible.builtin.docker_container:
+    image: FlaskApp:latest
+    name: Flask
+- name: Check if container is running
+  shell: docker ps
